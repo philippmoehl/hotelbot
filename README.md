@@ -4,7 +4,7 @@ This is an example chatbot based on the open-source framework of [Rasa](https://
 
 ## Install
 
-First you have to grant permissions for the intialization shell script. This will than set the required outstanding persmissions for the other shell scripts and create the required database folder ./db.
+First you have to grant permissions for the intialization shell script. This will than set the required outstanding permissions for the other shell scripts and create the required database folder ./db.
 
 `sudo chmod -R 777 initRun.sh`
 

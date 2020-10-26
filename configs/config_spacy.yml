@@ -1,0 +1,34 @@
+language: de
+pipeline:
+- name: spell.SpellCheckerDE
+- name: SpacyNLP
+- name: SpacyTokenizer
+- name: SpacyFeaturizer
+- name: RegexFeaturizer
+- name: LexicalSyntacticFeaturizer
+- name: CountVectorsFeaturizer
+- name: CountVectorsFeaturizer
+  analyzer: char_wb
+  min_ngram: 1
+  max_ngram: 4
+- name: DIETClassifier
+  epochs: 300
+- name: EntitySynonymMapper
+policies:
+- name: FormPolicy
+  priority: 5
+- name: FallbackPolicy
+  priority: 4
+  nlu_threshold: 0.3
+  core_threshold: 0.3
+  ambiguity_threshold: 0.1
+  fallback_action_name: utter_fallback
+- name: MemoizationPolicy
+  priority: 3
+- name: MappingPolicy
+  priority: 2
+- name: TEDPolicy
+  priority: 1
+  max_history: 8
+  epochs: 200
+  random_seed: 42

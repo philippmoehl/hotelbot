@@ -1,0 +1,29 @@
+version: '3.0'
+services:
+  rasa:
+    image: rasa_custom:2.0
+    ports:
+      - 5005:5005
+    command:
+      - run
+    environment:
+      DB_DATABASE: "rasa"
+    depends_on:
+      - db
+  action_server:
+    image: rasa_action:2.0
+    ports:
+      - 5055:5055
+    volumes:
+      - ./actions:/app/actions
+  db:
+    restart: always
+    image: "bitnami/postgresql:11.7.0"
+    ports:
+      - 5432:5432
+    environment:
+      POSTGRESQL_USERNAME: "admin"
+      POSTGRESQL_PASSWORD: "admin"
+      POSTGRESQL_DATABASE: "rasa"
+    volumes:
+      - ./db:/bitnami/postgresql

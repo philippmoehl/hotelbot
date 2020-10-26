@@ -1,0 +1,18 @@
+# build upon the latest version of the rasa api
+FROM rasa/rasa:1.10.12-full
+
+# developer information
+MAINTAINER Philipp Moehl <philipp.moehl@a1.group>
+
+# root permissions
+USER root
+
+COPY . /app
+COPY ./requirements.txt ./
+
+# install spellchecking package
+RUN python -m pip install --upgrade pip
+RUN pip install -r requirements.txt
+
+# By best practices, don't run the code with root user
+USER 1001

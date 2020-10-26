@@ -32,4 +32,4 @@ With hosting the bot on a local server, you will be able to call it via local AP
 
 ## SQL API
 
-With hosting the bot, you will have access to all the chat history and metadata through a Postgres SQL server. To access it, you can run the shell script `./startSQL.sh`. The username and keys will be the same, as defined in `./endpoints.yml`.
+With hosting the bot, you will have access to all the chat history and metadata through a Postgres SQL server. To access it, you can run the shell script `./startSQL.sh`. The username and keys will be the same, as defined in `./endpoints.yml` and `./docker-compose.yml`.

@@ -11,10 +11,10 @@ def repeat(tracker, dispatcher):
     tracker_list = []
 
     while user_ignore_count > 0:
-        event = tracker.events[count].get('event')
-        if event == 'user':
+        event = tracker.events[count].get("event")
+        if event == "user":
             user_ignore_count = user_ignore_count - 1
-        if event == 'bot':
+        if event == "bot":
             tracker_list.append(tracker.events[count])
         count = count - 1
 
@@ -22,16 +22,20 @@ def repeat(tracker, dispatcher):
     i = len(tracker_list) - 1
 
     while i >= 0:
-        data = tracker_list[i].get('data')
+        data = tracker_list[i].get("data")
         if data:
             if "buttons" in data:
-                dispatcher.utter_message(text=tracker_list[i].get('text'), buttons=data["buttons"])
+                dispatcher.utter_message(
+                    text=tracker_list[i].get("text"), buttons=data["buttons"])
             else:
-                dispatcher.utter_message(text=tracker_list[i].get('text'))
+                dispatcher.utter_message(text=tracker_list[i].get("text"))
             break
         i -= 1
 
 class BookRoomInfo(FormAction):
+    """
+    Book room information action form.
+    """
     def name(self) -> Text:
         return "form_book_room"
 
@@ -47,18 +51,25 @@ class BookRoomInfo(FormAction):
     ) -> List[Dict]:
 
         # utter submit template
-        dispatcher.utter_message(template="utter_submit", number=tracker.get_slot('number'),
-                                 room_type=tracker.get_slot('room_type'))
+        dispatcher.utter_message(
+            template="utter_submit",
+            number=tracker.get_slot("number"),
+            room_type=tracker.get_slot("room_type")
+            )
         return []
 
     def slot_mappings(self) -> Dict[Text, Union[Dict, List[Dict]]]:
 
         return {
-            "number": self.from_entity(entity="number", intent='num_rooms'),
-            "room_type": self.from_entity(entity="room_type", intent="type_rooms")
+            "number": self.from_entity(entity="number", intent="num_rooms"),
+            "room_type": self.from_entity(
+                entity="room_type", intent="type_rooms")
         }
 
 class BookRoomNumberInfo(FormAction):
+    """
+    Book room number information action form.
+    """
     def name(self) -> Text:
         return "form_book_room_number"
 
@@ -74,18 +85,21 @@ class BookRoomNumberInfo(FormAction):
     ) -> List[Dict]:
 
         # utter submit template
-        dispatcher.utter_message(template="utter_submit", 
-                                room_type=tracker.get_slot('room_type'))
+        dispatcher.utter_message(template="utter_submit",
+                                room_type=tracker.get_slot("room_type"))
         return []
 
     def slot_mappings(self) -> Dict[Text, Union[Dict, List[Dict]]]:
 
         return {
-            "room_type": self.from_entity(entity="room_type", intent="type_rooms")
+            "room_type": self.from_entity(
+                entity="room_type", intent="type_rooms")
         }
 
 class ResetSlots(Action):
-
+    """
+    Reset slots action.
+    """
     def name(self):
         return "action_reset_slots"
 
@@ -93,26 +107,33 @@ class ResetSlots(Action):
         return [SlotSet("number", None), SlotSet("room_type", None)]
 
 class MyFallbackAction(Action):
+    """
+    Fallback action.
+    """
     def name(self):
         return "action_my_fallback"
 
     def run(self, dispatcher, tracker, domain):
         dispatcher.utter_template("utter_fallback_message", tracker)
-        # repeat(tracker, dispatcher)        
+        # repeat(tracker, dispatcher)
         return [UserUtteranceReverted()]
 
 class ActionCheckInTime(Action):
-
+    """
+    Check in time action form.
+    """
     def name(self):
         return "action_check_in_time"
 
     def run(self, dispatcher, tracker, domain):
         dispatcher.utter_template("utter_check_in_time", tracker)
-        repeat(tracker, dispatcher)        
+        repeat(tracker, dispatcher)
         return [UserUtteranceReverted()]
 
 class ActionCheckOutTime(Action):
-    
+    """
+    Check out time action form.
+    """
     def name(self):
         return "action_check_out_time"
 
@@ -120,9 +141,11 @@ class ActionCheckOutTime(Action):
         dispatcher.utter_template("utter_check_out_time", tracker)
         repeat(tracker, dispatcher)
         return [UserUtteranceReverted()]
-    
+
 class ActionCancelReservation(Action):
-    
+    """
+    Cancel reservation action form.
+    """
     def name(self):
         return "action_cancel_reservation"
 
@@ -132,7 +155,9 @@ class ActionCancelReservation(Action):
         return [UserUtteranceReverted()]
 
 class ActionCancellationPolicy(Action):
-    
+    """
+    Cancellation policy action form.
+    """
     def name(self):
         return "action_cancellation_policy"
 
@@ -142,7 +167,9 @@ class ActionCancellationPolicy(Action):
         return [UserUtteranceReverted()]
 
 class ActionHaveRestaurant(Action):
-    
+    """
+    Restaurant information action form.
+    """
     def name(self):
         return "action_have_restaurant"
 
@@ -152,7 +179,9 @@ class ActionHaveRestaurant(Action):
         return [UserUtteranceReverted()]
 
 class ActionBreakfastAvail(Action):
-    
+    """
+    Breakfast available action form.
+    """
     def name(self):
         return "action_breakfast_avail"
 
@@ -160,9 +189,11 @@ class ActionBreakfastAvail(Action):
         dispatcher.utter_template("utter_breakfast_avail", tracker)
         repeat(tracker, dispatcher)
         return [UserUtteranceReverted()]
-    
+
 class ActionBreakfastTime(Action):
-    
+    """
+    Breakfast time action form.
+    """
     def name(self):
         return "action_breakfast_time"
 
@@ -172,7 +203,9 @@ class ActionBreakfastTime(Action):
         return [UserUtteranceReverted()]
 
 class ActionRestaurantTime(Action):
-    
+    """
+    Restaurant time action form.
+    """
     def name(self):
         return "action_restaurant_time"
 

@@ -1,6 +1,9 @@
 Hotel Chatbot
 =============
 
+![alt text](imgs/header.jpeg "title")
+
+
 Description
 ---------------
 

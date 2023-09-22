@@ -8,7 +8,11 @@ if typing.TYPE_CHECKING:
 
 from spellchecker import SpellChecker
 
+
 class SpellCheckerDE(Component):
+    """
+    Spell checker for German language.
+    """
 
     defaults = {}
     language_list = ["de"]
@@ -18,13 +22,14 @@ class SpellCheckerDE(Component):
 
     def process(self, message, **kwargs):
         mt =  message.text
-        str = mt.translate(mt.maketrans('', '', '!\"#$%&\'()*+,.:;<=>?@[\]^_`{|}~'))
-        words = str.split(' ')
+        txt = mt.translate(
+            mt.maketrans("", "", '!\"#$%&\'()*+,.:;<=>?@[\]^_`{|}~'))
+        words = txt.split(" ")
         words = [word for word in words if word]
         spell = SpellChecker(language=None)
-        spell.word_frequency.load_dictionary('resources/de.json.gz')
-        spell.word_frequency.load_text_file('resources/hotel_lex.txt')
-        
+        spell.word_frequency.load_dictionary("resources/de.json.gz")
+        spell.word_frequency.load_text_file("resources/hotel_lex.txt")
+
         for word in words:
             if word not in spell:
                 mt = mt.replace(word, spell.correction(word))

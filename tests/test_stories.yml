@@ -1,0 +1,20 @@
+version: "3.1"
+stories:
+- story: Happy path
+  steps:
+  - user: |
+      hi
+    intent: greet
+  - action: utter_greet
+  - user: |
+      I want to book a [room](location)
+    intent: book_room{"location":"room"}
+  - action: form_book_room
+  - active_loop: form_book_room
+  - active_loop: null
+  - action: action_reset_slots
+  - action: utter_is_that_all
+  - user: |
+      indeed
+    intent: affirm
+  - action: utter_goodbye

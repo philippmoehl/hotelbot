@@ -1,3 +1,3 @@
-sudo docker-compose stop
-sudo docker-compose rm -f
-sudo docker system prune --volumes
+docker-compose stop
+docker-compose rm -f
+docker system prune --volumes
